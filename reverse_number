@@ -1,0 +1,33 @@
+#include<iostream>
+#include <cstdlib>
+
+using namespace std;
+
+long int reverse(long int num)
+{
+    int rem = 0;
+    long int rev_num = 0;
+    bool flag = false;
+    if(num < 0)
+    {
+        flag = true;
+        num = abs(num);
+    }
+    while(num > 0)
+    {
+        rem = num % 10;
+        rev_num = rev_num * 10 + rem;
+        num = num / 10;
+    }
+    if(flag == true)
+    return -abs(rev_num);
+    else
+    return rev_num;
+}
+int main()
+{
+    long int num;
+    cin>>num;
+    long int res = reverse(num);
+    cout<<res<<endl;
+}
