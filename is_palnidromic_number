@@ -1,0 +1,36 @@
+#include<iostream>
+
+using namespace std;
+
+#define MAX 2147483647
+#define MIN -2147483647
+bool is_palindrome(int num)
+{
+    int num_recvd = num;
+    if(num < 0)
+    return false;
+
+    int reverse = 0,rem = 0;
+    while(num > 0)
+    {
+        if(reverse > MAX/10 || reverse < MIN/10)    return false;
+        rem = num % 10;
+        reverse = reverse*10 + rem;
+        num = num /10;
+    }
+    if(reverse == num_recvd)
+    return true;
+    else
+    return false;
+
+}
+int main()
+{
+    int num;
+    cin>>num;
+    bool res = is_palindrome(num);
+    if(res == true)
+    cout<<"true"<<endl;
+    else
+    cout<<"false"<<endl;
+}
