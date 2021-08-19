@@ -1,0 +1,57 @@
+#include<iostream>
+#include<string>
+
+using namespace std;
+
+
+int string_length(string str)
+{
+    int count=0;
+    while(str[count] != '\0')
+    {
+        count++;
+    }
+    return count;
+}
+int implement_strstr(string haystack, string needle)
+{
+
+    int len1 = string_length(haystack);
+    int len2 = string_length(needle);
+    int found = 0,location = 0;
+    if(len2 == 0)
+    return 0;
+    for(int i=0;i<len1;i++)
+    {
+        int j= 0;
+        for(j=0;j<len2;j++)
+        {
+           if(haystack[i+j] == needle[j])
+           {
+               continue;
+           }
+           else
+           break;
+        }
+        if(j == len2)
+        {
+            location = i;
+            found = 1;
+            break;
+        }
+    }
+    if(found)
+    return location;
+    else
+    return -1;
+
+}
+int main()
+{
+    string haystack;
+    getline(cin,haystack);
+    string needle;
+    getline(cin,needle);
+    int pos = implement_strstr(haystack,needle);
+    cout<<pos<<endl;
+}
