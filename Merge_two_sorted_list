@@ -1,0 +1,113 @@
+#include<iostream>
+#include<cstdlib>
+
+using namespace std;
+
+typedef struct node
+{
+    int data;
+    node *next;
+}node;
+
+void insert_into_List(int value, node **head)
+{
+    node *newnode = (node *)malloc(sizeof(node));
+    if(NULL == newnode)
+    return;
+
+    if(*head == NULL)
+    {
+        newnode->data = value;
+        newnode->next = NULL;
+        *head = newnode;
+        return;
+    }
+    else
+    {
+        node *temp = *head;
+        while(temp->next != NULL)
+        {
+            temp = temp->next;
+        }
+        temp->next = newnode;
+        newnode->data = value;
+        newnode->next = NULL;
+        return;
+    }
+}
+
+node *merge_two_List(node **head1, node **head2)
+{
+    node *dummyNode = (node *)malloc(sizeof(node));
+    node *dummyptr = dummyNode;
+    node *ptr1 = *head1;
+    node *ptr2 = *head2;
+
+    if(*head1 == NULL)
+    return *head2;
+    else if(*head2 == NULL)
+    return *head1;
+    while(ptr1 != NULL && ptr2 != NULL)
+    {
+        if(ptr1->data <= ptr2->data)
+        {
+            dummyptr->next = ptr1;
+            ptr1 = ptr1->next;
+        }
+        else
+        {
+            dummyptr->next = ptr2;
+            ptr2 = ptr2->next;
+        }
+        dummyptr = dummyptr->next;
+    }
+    while(ptr1 != NULL)//if anyone of the list exhaust first then need to link remaining nodes to dummy nodes
+    {
+        dummyptr->next = ptr1;
+        ptr1 = ptr1->next;
+        dummyptr = dummyptr->next;
+    }
+    while(ptr2 != NULL)//after this point both of the list are emptied now
+    {
+        dummyptr->next = ptr2;
+        ptr2 = ptr2->next;
+        dummyptr = dummyptr->next;
+    }
+
+    return dummyNode->next;
+}
+void display_List(node **head)
+{
+    node *temp = *head;
+    if(NULL == *head)
+    {
+        cout<<"List is empty"<<endl;
+        return;
+    }
+    while(temp != NULL)
+    {
+        cout<<temp->data<<" "<<endl;
+        temp = temp->next;
+    }
+}
+int main()
+{
+    node *head1 = NULL;
+    node *head2 = NULL;
+    insert_into_List(1,&head1);
+    insert_into_List(3,&head1);
+    insert_into_List(5,&head1);
+    insert_into_List(7,&head1);
+    insert_into_List(2,&head2);
+    insert_into_List(4,&head2);
+    insert_into_List(6,&head2);
+    insert_into_List(8,&head2);
+    cout<<"List1 contents: "<<endl;
+    display_List(&head1);
+    cout<<endl;
+    cout<<"List2 contents: "<<endl;
+    display_List(&head2);
+    cout<<"After merging two list" <<endl;
+    node *mergeNode = merge_two_List(&head1,&head2);
+    display_List(&mergeNode);
+}
