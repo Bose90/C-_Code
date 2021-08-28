@@ -1,0 +1,85 @@
+#include<stdio.h>
+#include<stdlib.h>
+using namespace std;
+
+typedef struct node
+{
+    int data;
+    node *next;
+}node;
+
+
+void addLast(node **head, int val)
+{
+
+    node *newNode = (node *)malloc(sizeof( node));
+    newNode->data = val;
+    newNode->next     = NULL;
+
+
+    if(*head == NULL)
+         *head = newNode;
+
+    else
+    {
+        node *lastNode = *head;
+
+
+        while(lastNode->next != NULL)
+        {
+            lastNode = lastNode->next;
+        }
+
+        lastNode->next = newNode;
+    }
+
+}
+void deleteNode(node **head, int key)
+{
+
+    node *curr = *head;
+    while(*head!=NULL && (*head)->data==key) {
+        *head = (*head)->next;
+    }
+
+    while(curr->next != NULL)
+    {
+        if(curr->next->data == key)
+        {
+            node *temp = curr->next;
+            curr->next = curr->next->next;
+            delete(temp);
+        }
+        else
+        curr = curr->next;
+    }
+
+}
+void printList(node **head)
+{
+    node *temp = *head;
+    while(temp != NULL)
+    {
+         printf("%d ->", temp->data);
+         temp = temp->next;
+    }
+    printf("NULL\n");
+}
+int main()
+{
+     node *head = NULL;
+
+     addLast(&head,1);
+     addLast(&head,2);
+     addLast(&head,6);
+     addLast(&head,4);
+     addLast(&head,4);
+     addLast(&head,5);
+     addLast(&head,6);
+     printf("Linked List Elements:\n");
+     printList(&head);
+
+     deleteNode(&head,6);
+     printf("The New Linked List:\n");
+     printList(&head);
+}
